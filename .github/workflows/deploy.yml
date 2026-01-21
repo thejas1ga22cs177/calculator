@@ -27,4 +27,10 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/basic-calculator:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/calculator-21jan26:latest
+
+    - name: Trigger Render Deployment
+      # Only run this step if the build/push was successful
+      if: success()
+      # This secret needs to be added to your GitHub repository
+      run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
